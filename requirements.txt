@@ -1,0 +1,14 @@
+# requirements.txt
+Django>=4.2,<5.0
+djangorestframework>=3.14
+python-dotenv>=1.0
+psycopg[binary]>=3.1
+django-filter>=23.0
+django-cors-headers>=4.0
+Pillow>=10.0
+
+# Documentation tools
+drf-spectacular>=0.27
+django-extensions>=3.2
+pydotplus>=2.0
+
