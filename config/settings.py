@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Local apps
+    'apps.core.apps.CoreConfig',
+    'apps.accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -116,18 +120,40 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "accounts.User"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'id-ID'
 
 TIME_ZONE = 'Asia/Jakarta'
+LOCAL_TIMEZONE = 'Asia/Jakarta'
 
 USE_I18N = True
 
 USE_TZ = True
 
+USE_L10N = False
+
+# ========== FULL FORMAT (untuk detail view) ==========
+DATE_FORMAT = 'd/m/Y'              # 27/12/2025
+TIME_FORMAT = 'H:i:s'              # 08:00:00
+DATETIME_FORMAT = 'd/m/Y H:i:s'    # 27/12/2025 08:00:00
+
+# ========== SHORT FORMAT (untuk list/table) ==========
+SHORT_DATE_FORMAT = 'd/m/y'        # 27/12/25 (2 digit year)
+SHORT_DATETIME_FORMAT = 'd/m H:i'  # 27/12 08:00 (no year, no seconds)
+
+FIRST_DAY_OF_WEEK = 1  # Senin (0=minggu)
+
+# ========== FULL FORMAT with DAY (untuk detail view) ==========
+DATE_FORMAT_DAY = 'l, d/m/Y'              # Jumat, 27/12/2025
+DATETIME_FORMAT_DAY = 'l, d/m/Y H:i:s'    # Jumat, 27/12/2025 08:00:00
+
+# ========== SHORT FORMAT with Day (untuk list/table) ==========
+SHORT_DATE_FORMAT_DAY = 'D, d/m/y'        # Jum, 27/12/25
+SHORT_DATETIME_FORMAT_DAY = 'D, d/m H:i'  # Jum, 27/12 08:00
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
