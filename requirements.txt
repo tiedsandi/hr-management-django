@@ -1,14 +1,72 @@
 # requirements.txt
-Django>=4.2,<5.0
-djangorestframework>=3.14
-python-dotenv>=1.0
-psycopg[binary]>=3.1
-django-filter>=23.0
-django-cors-headers>=4.0
-Pillow>=10.0
 
-# Documentation tools
-drf-spectacular>=0.27
-django-extensions>=3.2
-pydotplus>=2.0
+# ============================================
+# Core Django & REST Framework
+# ============================================
+Django==4.2.27                          # LTS version (support until April 2026)
+djangorestframework==3.14.0             # Stable, mature
+python-dotenv==1.0.1                    # Environment variables
 
+# ============================================
+# Database
+# ============================================
+psycopg[binary]==3.1.19                 # PostgreSQL adapter
+# psycopg2-binary==2.9.9                # Alternative (older, more stable)
+
+# ============================================
+# Authentication & Security
+# ============================================
+djangorestframework-simplejwt==5.3.1    # ✅ TAMBAHKAN - JWT auth
+django-cors-headers==4.3.1              # CORS handling
+
+# ============================================
+# API & Filtering
+# ============================================
+django-filter==23.5                     # Query filtering
+drf-spectacular==0.27.1                 # OpenAPI/Swagger docs
+
+# ============================================
+# Media & Files
+# ============================================
+Pillow==10.2.0                          # Image processing
+
+# ============================================
+# Utilities
+# ============================================
+pytz==2024.1                            # Timezone handling
+django-extensions==3.2.3                # Management commands
+
+# ============================================
+# Development Tools
+# ============================================
+pydotplus==2.0.2                        # Graph visualization (optional)
+
+# ============================================
+# Testing
+# ============================================
+pytest==7.4.3
+pytest-django==4.7.0
+pytest-cov==4.1.0
+pytest-xdist==3.5.0
+pytest-mock==3.12.0
+faker==20.1.0
+factory-boy==3.3.0
+freezegun==1.4.0
+responses==0.24.1
+
+# ============================================
+# Code Quality
+# ============================================
+black==23.12.1
+flake8==7.0.0
+isort==5.13.2
+mypy==1.8.0
+
+# ============================================
+# Production (Optional - uncomment when needed)
+# ============================================
+# gunicorn==21.2.0                      # WSGI server
+# whitenoise==6.6.0                     # Static files serving
+# django-redis==5.4.0                   # Redis cache
+# celery==5.3.4                         # Background tasks
+# sentry-sdk==1.40.0                    # Error tracking
