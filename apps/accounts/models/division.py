@@ -81,7 +81,7 @@ class Division(AuditModel):
         return self.children.active()
 
     def active_employees(self) -> QuerySet["User"]:
-        return self.employees.filter(status="active")
+        return self.employees.filter(is_active=True)
     
     @property
     def full_path(self):
@@ -125,12 +125,12 @@ class Division(AuditModel):
     @property
     def employee_count(self):
         """Count ACTIVE employees di division ini"""
-        return self.employees.active().count()
+        return self.employees.filter(is_active=True).count()
     
     @property
     def total_employee_count(self):
         """Count ACTIVE employees including children"""
         count = self.employee_count
-        for child in self.children.active():
+        for child in self.children.filter(deleted_at__isnull=True):
             count += child.total_employee_count
         return count

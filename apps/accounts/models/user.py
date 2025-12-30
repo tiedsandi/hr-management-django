@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 from apps.core.utils import now
-from apps.core.validators import validate_phone_number
+from apps.core.validators import validate_email_domain, validate_phone_number
 
 
 class User(AbstractUser):
@@ -43,6 +43,10 @@ class User(AbstractUser):
         unique=True,
         db_index=True,
         help_text='ID karyawan unik (contoh: EMP0001, EMP0002)'
+    )
+    email = models.EmailField(
+        unique=True, 
+        validators=[validate_email_domain]
     )
     phone = models.CharField(
         max_length=15,
