@@ -1,22 +1,33 @@
-from rest_framework import status, generics
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from django.contrib.auth import get_user_model
+from drf_spectacular.utils import OpenApiResponse, extend_schema
+from rest_framework import generics, status
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
-from django.contrib.auth import get_user_model
 
 from api.v1.accounts.serializers.user import (
-    UserSerializer,
-    RegisterSerializer,
-    LoginSerializer,
     ChangePasswordSerializer,
-    ProfileSerializer
+    LoginSerializer,
+    ProfileSerializer,
+    RegisterSerializer,
+    UserSerializer,
 )
 
 User = get_user_model()
 
 
+@extend_schema(
+    tags=['Authentication'],
+    request=RegisterSerializer,
+    responses={
+        201: OpenApiResponse(description='User registered successfully'),
+        400: OpenApiResponse(description='Validation error'),
+    },
+    summary='Register new user',
+    description='Create a new user account with email and password'
+)
 class RegisterView(generics.CreateAPIView):
     """
     Register user baru.
@@ -45,6 +56,16 @@ class RegisterView(generics.CreateAPIView):
         }, status=status.HTTP_201_CREATED)
 
 
+@extend_schema(
+    tags=['Authentication'],
+    request=LoginSerializer,
+    responses={
+        200: OpenApiResponse(description='Login successful'),
+        400: OpenApiResponse(description='Invalid credentials'),
+    },
+    summary='Login user',
+    description='Authenticate user and return JWT tokens'
+)
 class LoginView(APIView):
     """
     Login user.
@@ -76,6 +97,16 @@ class LoginView(APIView):
         }, status=status.HTTP_200_OK)
 
 
+@extend_schema(
+    tags=['Authentication'],
+    request={'refresh': 'string'},
+    responses={
+        200: OpenApiResponse(description='Logout successful'),
+        400: OpenApiResponse(description='Invalid token'),
+    },
+    summary='Logout user',
+    description='Blacklist refresh token to invalidate JWT session'
+)
 class LogoutView(APIView):
     """
     Logout user (blacklist refresh token).
@@ -107,6 +138,14 @@ class LogoutView(APIView):
             )
 
 
+@extend_schema(
+    tags=['Users V1'],
+    responses={
+        200: ProfileSerializer,
+    },
+    summary='Get or update user profile',
+    description='Retrieve or update authenticated user profile information'
+)
 class ProfileView(generics.RetrieveUpdateAPIView):
     """
     Get & Update user profile.
@@ -122,6 +161,16 @@ class ProfileView(generics.RetrieveUpdateAPIView):
         return self.request.user
 
 
+@extend_schema(
+    tags=['Users V1'],
+    request=ChangePasswordSerializer,
+    responses={
+        200: OpenApiResponse(description='Password changed successfully'),
+        400: OpenApiResponse(description='Invalid old password or validation error'),
+    },
+    summary='Change password',
+    description='Change password for authenticated user'
+)
 class ChangePasswordView(APIView):
     """
     Change password.
