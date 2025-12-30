@@ -16,7 +16,7 @@ psycopg[binary]==3.1.19                 # PostgreSQL adapter
 # ============================================
 # Authentication & Security
 # ============================================
-djangorestframework-simplejwt==5.3.1    # ✅ TAMBAHKAN - JWT auth
+djangorestframework-simplejwt==5.3.1    # JWT auth
 django-cors-headers==4.3.1              # CORS handling
 
 # ============================================
@@ -39,7 +39,11 @@ django-extensions==3.2.3                # Management commands
 # ============================================
 # Development Tools
 # ============================================
-pydotplus==2.0.2                        # Graph visualization (optional)
+pydotplus==2.0.2                        # Visualisasi model
+django-stubs==4.2.7                     # Type hints untuk Django
+django-stubs-ext==4.2.7                 # Extensions
+djangorestframework-stubs==3.14.5       # Type hints untuk DRF
+types-pytz==2024.1.0.20240203          # Type hints untuk pytz
 
 # ============================================
 # Testing
