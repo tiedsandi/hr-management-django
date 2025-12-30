@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
+    'drf_spectacular',
+    'django_filters',
+    'corsheaders',
 
     # Local apps
     'apps.core.apps.CoreConfig',
@@ -59,6 +62,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20,
     'DEFAULT_FILTER_BACKENDS': [
@@ -104,9 +108,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    'core.middleware.TimezoneMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -216,3 +218,62 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Spectacular Settings for OpenAPI/Swagger
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'HR Management System API',
+    'DESCRIPTION': 'API Documentation for HR Management System',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True,
+    
+    # Contact & License Info
+    'CONTACT': {
+        'name': 'HR Management Support',
+        'email': 'support@hrmanagement.local',
+    },
+    'LICENSE': {
+        'name': 'Private - Internal Use Only',
+    },
+    
+    # Swagger UI Settings
+    'SWAGGER_UI_SETTINGS': {
+        'deepLinking': True,
+        'persistAuthorization': True,
+        'displayOperationId': False,
+        'filter': True,
+        'defaultModelsExpandDepth': 2,
+        'defaultModelExpandDepth': 2,
+        'docExpansion': 'list',
+        'supportedSubmitMethods': ['get', 'post', 'put', 'patch', 'delete'],
+    },
+    
+    # Security Configuration
+    'SECURITY': [{
+        'bearerAuth': {
+            'type': 'http',
+            'scheme': 'bearer',
+            'bearerFormat': 'JWT',
+        }
+    }],
+    'APPEND_COMPONENTS': {
+        'securitySchemes': {
+            'bearerAuth': {
+                'type': 'http',
+                'scheme': 'bearer',
+                'bearerFormat': 'JWT',
+                'description': 'JWT Authorization header using Bearer scheme. Example: "Bearer {token}"',
+            }
+        }
+    },
+    
+    # Tags dengan deskripsi lengkap
+    'TAGS': [
+        {'name': 'Authentication', 'description': 'User authentication and authorization endpoints'},
+        {'name': 'Users V1', 'description': 'User management endpoints (V1)'},
+        {'name': 'Users V2', 'description': 'Enhanced user endpoints with metadata and statistics (V2)'},
+        {'name': 'Divisions', 'description': 'Division/Department management endpoints'},
+    ],
+}
+
+
