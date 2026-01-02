@@ -1,25 +1,12 @@
-# config/settings/testing.py
 """
-Testing-specific settings.
-
-Fast, in-memory database for tests.
+Testing settings.
 """
-
 from .base import *
 
-# ========================================
-# DEBUG
-# ========================================
 DEBUG = False
-
-# ========================================
-# TESTING FLAGS
-# ========================================
 TESTING = True
 
-# ========================================
-# DATABASE (In-memory SQLite for speed)
-# ========================================
+# Database - In-memory SQLite
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -27,21 +14,13 @@ DATABASES = {
     }
 }
 
-# ========================================
-# PASSWORD HASHERS (Faster for tests)
-# ========================================
-PASSWORD_HASHERS = [
-    'django.contrib.auth.hashers.MD5PasswordHasher',
-]
+# Password hashers - Fast
+PASSWORD_HASHERS = ['django.contrib.auth.hashers.MD5PasswordHasher']
 
-# ========================================
-# EMAIL (Memory backend for tests)
-# ========================================
+# Email - Memory backend
 EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 
-# ========================================
-# LOGGING (Minimal for tests)
-# ========================================
+# Logging - Minimal
 LOGGING['root']['level'] = 'CRITICAL'
 LOGGING['loggers']['django']['level'] = 'CRITICAL'
 LOGGING['loggers']['apps']['level'] = 'CRITICAL'
